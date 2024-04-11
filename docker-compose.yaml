@@ -1,0 +1,85 @@
+version: "3"
+
+
+
+networks:
+  weather-api-otel:
+
+
+
+services:
+  prometheus:
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - ./.docker/prometheus.yaml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+
+  jaeger: # all-in-one
+    container_name: jaeger
+    hostname: jaeger
+    restart: always
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 16686:16686
+      - 14268
+      - 14250
+
+  otel-collector:
+    container_name: otel-collector
+    hostname: otel-collector
+    restart: always
+    image: otel/opentelemetry-collector:latest
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    ports:
+      - 4317:4317 # Prometheus metrics exposed by the collector
+      - 8888:8888 # Prometheus metrics exporter
+      - 8889:8889 # OTLP gRPC receiver
+    volumes:
+      - ./.docker/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+
+  # input-api:
+  #   container_name: input-api
+  #   hostname: input-api
+  #   restart: always
+  #   build:
+  #     context: .
+  #     args:
+  #       - TARGET_API=input
+  #       - API_PORT=8080
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     API_PORT: 8080
+  #   depends_on:
+  #     - jaeger
+  #     - prometheus
+  #     - otel-collector
+
+  # orchestrator-api:
+  #   container_name: orchestrator-api
+  #   hostname: orchestrator-api
+  #   restart: always
+  #   build:
+  #     context: .
+  #     args:
+  #       - TARGET_API=orchestrator
+  #       - API_PORT=8081
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     API_PORT: 8081
+  #     INPUT_API_URL: "http://input-api:8080"
