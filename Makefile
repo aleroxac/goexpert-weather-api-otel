@@ -15,15 +15,30 @@ clean: ## Clean all temp files
 
 
 
-## ---------- MAIN
+## ----- COMPOSE
 .PHONY: up
-up: ## put the docker-compose containers up
+up: ## Put the compose containers up
 	@docker-compose up -d
 
 .PHONY: down
-down: ## put the docker-compose containers down
+down: ## Put the compose containers down
 	@docker-compose down
 
+
+
+## ---------- MAIN
 .PHONY: run
-run: ## make a request to the API
-	@curl -sv -X POST http://localhost:8080/weather -H "Content-Type: application/json" -d '{"cep": "13330250"}'
+run: ## Make a request to the API
+	@echo -e -----------------" input-api -----------------"
+	@echo -n "422: "; curl -s "http://localhost:8080/cep" -d '{"cep": "1234567"}'
+	@echo -n "200: "; curl -s "http://localhost:8080/cep" -d '{"cep": "13330250"}'
+
+	@echo -e "\n\n------------- orchestrator-api -------------"
+	@echo -n "422: "; curl -s "http://localhost:8081/cep/1234567"
+	@echo -n "404: "; curl -s "http://localhost:8081/cep/12345678"
+	@echo -n "200: "; curl -s "http://localhost:8081/cep/13330250"
+
+.PHONY: test
+test: ## Run the tests
+	@go test -v ./... -coverprofile=coverage.out
+	@go tool cover -html coverage.out -o coverage.html
