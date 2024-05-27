@@ -1,0 +1,1338 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>configs: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/aleroxac/goexpert-weather-api-otel/configs/config.go (0.0%)</option>
+				
+				<option value="file1">github.com/aleroxac/goexpert-weather-api-otel/configs/mock_config.go (100.0%)</option>
+				
+				<option value="file2">github.com/aleroxac/goexpert-weather-api-otel/input-api/cmd/app/main.go (0.0%)</option>
+				
+				<option value="file3">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/entity/cep.go (100.0%)</option>
+				
+				<option value="file4">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/repo/cep_repository.go (61.9%)</option>
+				
+				<option value="file5">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/web/cep_handler.go (74.3%)</option>
+				
+				<option value="file6">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/web/status_handler.go (71.4%)</option>
+				
+				<option value="file7">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/web/webserver/starter.go (0.0%)</option>
+				
+				<option value="file8">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/web/webserver/webserver.go (0.0%)</option>
+				
+				<option value="file9">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/usecase/get_cep.go (100.0%)</option>
+				
+				<option value="file10">github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/usecase/validate_cep.go (100.0%)</option>
+				
+				<option value="file11">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/cmd/app/main.go (0.0%)</option>
+				
+				<option value="file12">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity/cep.go (100.0%)</option>
+				
+				<option value="file13">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity/weather.go (100.0%)</option>
+				
+				<option value="file14">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/repo/cep_repository.go (61.3%)</option>
+				
+				<option value="file15">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/repo/weather_repository.go (62.9%)</option>
+				
+				<option value="file16">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/web/cep_handler.go (71.1%)</option>
+				
+				<option value="file17">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/web/status_handler.go (71.4%)</option>
+				
+				<option value="file18">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/web/webserver/starter.go (0.0%)</option>
+				
+				<option value="file19">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/web/webserver/webserver.go (0.0%)</option>
+				
+				<option value="file20">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/usecase/get_cep.go (90.0%)</option>
+				
+				<option value="file21">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/usecase/get_weather.go (87.5%)</option>
+				
+				<option value="file22">github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/usecase/validate_cep.go (100.0%)</option>
+				
+				<option value="file23">github.com/aleroxac/goexpert-weather-api-otel/pkg/otel/otel_provider.go (0.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package configs
+
+import "github.com/spf13/viper"
+
+type Conf struct {
+        InputApiHttpPort                      string `mapstructure:"INPUT_API_HTTP_PORT"`
+        InputApiOtelServiceName               string `mapstructure:"INPUT_API_OTEL_SERVICE_NAME"`
+        OrchestratorApiPort                   string `mapstructure:"ORCHESTRATOR_API_PORT"`
+        OrchestratorApiHost                   string `mapstructure:"ORCHESTRATOR_API_HOST"`
+        OpenWeathermapApiKey                  string `mapstructure:"OPEN_WEATHERMAP_API_KEY"`
+        OrchestratorApiServiceName            string `mapstructure:"ORCHESTRATOR_API_SERVICE_NAME"`
+        OpenTelemetryCollectorExporerEndpoint string `mapstructure:"OPEN_TELEMETRY_COLLECTOR_EXPORTER_ENDPOINT"`
+}
+
+func LoadConfig(path string) (*Conf, error) <span class="cov0" title="0">{
+        var cfg *Conf
+        viper.SetConfigName(".env")
+        viper.SetConfigType("env")
+        viper.AddConfigPath(path)
+        // viper.SetConfigFile(".env")
+        viper.AutomaticEnv()
+        err := viper.ReadInConfig()
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+        <span class="cov0" title="0">err = viper.Unmarshal(&amp;cfg)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+        <span class="cov0" title="0">return cfg, err</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package configs
+
+func MockConfig() *Conf <span class="cov8" title="1">{
+        return &amp;Conf{
+                InputApiHttpPort:                      "8080",
+                InputApiOtelServiceName:               "test",
+                OrchestratorApiPort:                   "8081",
+                OrchestratorApiHost:                   "test",
+                OpenWeathermapApiKey:                  "test",
+                OrchestratorApiServiceName:            "test",
+                OpenTelemetryCollectorExporerEndpoint: "test",
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package main
+
+import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "os/signal"
+        "time"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/configs"
+        "github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/web"
+        "github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/web/webserver"
+        otel_provider "github.com/aleroxac/goexpert-weather-api-otel/pkg/otel"
+        "github.com/spf13/viper"
+        "go.opentelemetry.io/otel"
+)
+
+func ConfigureServer(conf *configs.Conf) *webserver.WebServer <span class="cov0" title="0">{
+        fmt.Println("Starting web server on port", conf.InputApiHttpPort)
+
+        tracer := otel.Tracer("intput-api-tracer")
+
+        webserver := webserver.NewWebServer(":" + conf.InputApiHttpPort)
+        webCEPHandler := web.NewWebCEPHandler(conf, tracer)
+        webStatusHandler := web.NewWebStatusHandler()
+        webserver.AddHandler("POST /cep", webCEPHandler.Get)
+        webserver.AddHandler("GET /status", webStatusHandler.Get)
+        return webserver
+}</span>
+
+func init() <span class="cov0" title="0">{
+        viper.AutomaticEnv()
+}</span>
+
+func main() <span class="cov0" title="0">{
+        // ----- CONFIGS
+        configs, err := configs.LoadConfig(".")
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        // ---------- gracefull shutdown
+        <span class="cov0" title="0">sigCh := make(chan os.Signal, 1)
+        signal.Notify(sigCh, os.Interrupt)
+        ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+        defer cancel()
+
+        // ---------- provider
+        shutdown, err := otel_provider.InitProvider(configs.InputApiOtelServiceName, configs.OpenTelemetryCollectorExporerEndpoint)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+        }</span>
+        <span class="cov0" title="0">defer func() </span><span class="cov0" title="0">{
+                if err := shutdown(ctx); err != nil </span><span class="cov0" title="0">{
+                        log.Fatal("failed to shutdown TracerProvider: %w", err)
+                }</span>
+        }()
+
+        // ---------- webserver
+        <span class="cov0" title="0">go func() </span><span class="cov0" title="0">{
+                webserver := ConfigureServer(configs)
+                webserver.Start()
+        }</span>()
+
+        <span class="cov0" title="0">select </span>{
+        case &lt;-sigCh:<span class="cov0" title="0">
+                log.Println("Shutting down gracefully, CTRL+c pressed...")</span>
+        case &lt;-ctx.Done():<span class="cov0" title="0">
+                log.Println("Shutting down due other reason...")</span>
+        }
+
+        <span class="cov0" title="0">_, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer shutdownCancel()</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package entity
+
+type CEP struct {
+        CEP         string
+        Logradouro  string
+        Complemento string
+        Bairro      string
+        Localidade  string
+        UF          string
+        IBGE        string
+        GIA         string
+        DDD         string
+        SIAFI       string
+}
+
+func NewCEP(cep, logradouro, complemento, bairro, localidade, uf, ibge, gia, ddd, siafi string) *CEP <span class="cov8" title="1">{
+        new_cep := &amp;CEP{
+                CEP:         cep,
+                Logradouro:  logradouro,
+                Complemento: complemento,
+                Bairro:      bairro,
+                Localidade:  localidade,
+                UF:          uf,
+                IBGE:        ibge,
+                GIA:         gia,
+                DDD:         ddd,
+                SIAFI:       siafi,
+        }
+        return new_cep
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package repo
+
+import (
+        "context"
+        "fmt"
+        "log"
+        "net/http"
+        "regexp"
+        "time"
+)
+
+type CEPRepository struct {
+        OrchestratorApiHost string
+        OrchestratorApiPort string
+}
+
+func NewCEPRepository(orchestrator_api_host string, orchestrator_api_port string) *CEPRepository <span class="cov8" title="1">{
+        return &amp;CEPRepository{
+                OrchestratorApiHost: orchestrator_api_host,
+                OrchestratorApiPort: orchestrator_api_port,
+        }
+}</span>
+
+func (r *CEPRepository) IsValid(cep_address string) bool <span class="cov8" title="1">{
+        check, _ := regexp.MatchString("^[0-9]{8}$", cep_address)
+        return (len(cep_address) == 8 &amp;&amp; cep_address != "" &amp;&amp; check)
+}</span>
+
+func (r *CEPRepository) Get(cep_address string) error <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+        defer cancel()
+
+        req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf(
+                "http://%s:%s/cep/%s",
+                r.OrchestratorApiHost,
+                r.OrchestratorApiPort,
+                cep_address),
+                nil,
+        )
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to create the request: %v", err)
+                return err
+        }</span>
+
+        <span class="cov8" title="1">res, err := http.DefaultClient.Do(req)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to make the request: %v", err)
+                return err
+        }</span>
+        <span class="cov8" title="1">defer res.Body.Close()
+
+        ctx_err := ctx.Err()
+        if ctx_err != nil </span><span class="cov0" title="0">{
+                select </span>{
+                case &lt;-ctx.Done():<span class="cov0" title="0">
+                        err := ctx.Err()
+                        log.Printf("Max timeout reached: %v", err)
+                        return err</span>
+                }
+        }
+
+        <span class="cov8" title="1">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package web
+
+import (
+        "encoding/json"
+        "io"
+        "net/http"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/configs"
+        "github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/entity"
+        "github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/repo"
+        "github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/usecase"
+        "go.opentelemetry.io/otel"
+        "go.opentelemetry.io/otel/propagation"
+        "go.opentelemetry.io/otel/trace"
+)
+
+type WebCEPHandler struct {
+        CEPRepository entity.CEPRepositoryInterface
+        Configs       *configs.Conf
+        Tracer        trace.Tracer
+}
+
+func NewWebCEPHandler(conf *configs.Conf, tracer trace.Tracer) *WebCEPHandler <span class="cov0" title="0">{
+        return &amp;WebCEPHandler{
+                CEPRepository: repo.NewCEPRepository(conf.OrchestratorApiHost, conf.OrchestratorApiPort),
+                Configs:       conf,
+                Tracer:        tracer,
+        }
+}</span>
+
+func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        carrier := propagation.HeaderCarrier(r.Header)
+        ctx := r.Context()
+        ctx = otel.GetTextMapPropagator().Extract(ctx, carrier)
+
+        _, span := h.Tracer.Start(ctx, "SPAN_READ_BODY")
+        resp, err := io.ReadAll(r.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "fail to read the response", http.StatusInternalServerError)
+                return
+        }</span>
+        <span class="cov8" title="1">span.End()
+
+        _, span = h.Tracer.Start(ctx, "SPAN_DECODE_RESPONSE")
+        var cep_data usecase.CEPInputDTO
+        err = json.Unmarshal(resp, &amp;cep_data)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "fail to parse the cep_data", http.StatusInternalServerError)
+                return
+        }</span>
+        <span class="cov8" title="1">span.End()
+
+        _, span = h.Tracer.Start(ctx, "SPAN_VALIDATE_CEP")
+        validate_cep_dto := usecase.ValidateCEPInputDTO{
+                CEP: cep_data.CEP,
+        }
+
+        validateCEP := usecase.NewValidateCEPUseCase(h.CEPRepository)
+        is_valid := validateCEP.Execute(validate_cep_dto)
+        if !is_valid </span><span class="cov0" title="0">{
+                http.Error(w, "invalid zipcode", http.StatusUnprocessableEntity)
+                return
+        }</span>
+        <span class="cov8" title="1">span.End()
+
+        _, span = h.Tracer.Start(ctx, "SPAN_GET_CEP_RESPONSE_TIME")
+        get_cep_dto := usecase.CEPInputDTO{
+                CEP: cep_data.CEP,
+        }
+
+        getCEP := usecase.NewGetCEPUseCase(h.CEPRepository)
+        err = getCEP.Execute(get_cep_dto)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "error getting cep", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        span.End()</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package web
+
+import (
+        "encoding/json"
+        "net/http"
+)
+
+type WebStatusHandler struct{}
+
+func NewWebStatusHandler() *WebStatusHandler <span class="cov8" title="1">{
+        return &amp;WebStatusHandler{}
+}</span>
+
+type Status struct {
+        Status string `json:"status"`
+}
+
+func (h *WebStatusHandler) Get(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        status := Status{
+                Status: "UP",
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        err := json.NewEncoder(w).Encode(status)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package webserver
+
+type WebServerStarter struct {
+        WebServer WebServer
+}
+
+func NewWebServerStarter(webServer WebServer) *WebServerStarter <span class="cov0" title="0">{
+        return &amp;WebServerStarter{
+                WebServer: webServer,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package webserver
+
+import (
+        "net/http"
+        "time"
+
+        "github.com/go-chi/chi/v5"
+        "github.com/go-chi/chi/v5/middleware"
+        "github.com/prometheus/client_golang/prometheus/promhttp"
+)
+
+type WebServer struct {
+        Router        chi.Router
+        Handlers      map[string]http.HandlerFunc
+        WebServerPort string
+}
+
+func NewWebServer(serverPort string) *WebServer <span class="cov0" title="0">{
+        return &amp;WebServer{
+                Router:        chi.NewRouter(),
+                Handlers:      make(map[string]http.HandlerFunc),
+                WebServerPort: serverPort,
+        }
+}</span>
+
+func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) <span class="cov0" title="0">{
+        s.Handlers[path] = handler
+}</span>
+
+func (s *WebServer) Start() <span class="cov0" title="0">{
+        s.Router.Use(middleware.Logger)
+        s.Router.Use(middleware.RequestID)
+        s.Router.Use(middleware.RealIP)
+        s.Router.Use(middleware.Recoverer)
+        s.Router.Use(middleware.Timeout(60 * time.Second))
+        s.Router.Handle("/metrics", promhttp.Handler())
+
+        for path, handler := range s.Handlers </span><span class="cov0" title="0">{
+                s.Router.Handle(path, handler)
+        }</span>
+        <span class="cov0" title="0">http.ListenAndServe(s.WebServerPort, s.Router)</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package usecase
+
+import (
+        "github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/entity"
+)
+
+type CEPInputDTO struct {
+        CEP string `json:"cep"`
+}
+
+type CEPOutputDTO struct {
+        CEP         string `json:"cep"`
+        Logradouro  string `json:"logradouro"`
+        Complemento string `json:"complemento"`
+        Bairro      string `json:"bairro"`
+        Localidade  string `json:"localidade"`
+        UF          string `json:"uf"`
+        IBGE        string `json:"ibge"`
+        GIA         string `json:"gia"`
+        DDD         string `json:"ddd"`
+        SIAFI       string `json:"siafi"`
+}
+
+type GetCEPUseCase struct {
+        CEPRepository entity.CEPRepositoryInterface
+}
+
+func NewGetCEPUseCase(cep_repository entity.CEPRepositoryInterface) *GetCEPUseCase <span class="cov8" title="1">{
+        return &amp;GetCEPUseCase{
+                CEPRepository: cep_repository,
+        }
+}</span>
+
+func (c *GetCEPUseCase) Execute(input CEPInputDTO) error <span class="cov8" title="1">{
+        cep := entity.CEP{
+                CEP: input.CEP,
+        }
+
+        err := c.CEPRepository.Get(cep.CEP)
+        if err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package usecase
+
+import (
+        "github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/entity"
+)
+
+type ValidateCEPInputDTO struct {
+        CEP string
+}
+
+type ValidateCEPOutputDTO struct {
+        IsValid bool
+}
+
+type ValidateCEPUseCase struct {
+        CEPRepository entity.CEPRepositoryInterface
+}
+
+func NewValidateCEPUseCase(cep_repository entity.CEPRepositoryInterface) *ValidateCEPUseCase <span class="cov8" title="1">{
+        return &amp;ValidateCEPUseCase{
+                CEPRepository: cep_repository,
+        }
+}</span>
+
+func (c *ValidateCEPUseCase) Execute(input ValidateCEPInputDTO) bool <span class="cov8" title="1">{
+        return c.CEPRepository.IsValid(input.CEP)
+}</span>
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package main
+
+import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "os/signal"
+        "time"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/configs"
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/web"
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/web/webserver"
+        otel_provider "github.com/aleroxac/goexpert-weather-api-otel/pkg/otel"
+        "go.opentelemetry.io/otel"
+)
+
+func ConfigureServer(conf *configs.Conf) *webserver.WebServer <span class="cov0" title="0">{
+        fmt.Println("Starting web server on port", conf.OrchestratorApiPort)
+
+        tracer := otel.Tracer("orchestrator-api-tracer")
+
+        webserver := webserver.NewWebServer(":" + conf.OrchestratorApiPort)
+        webCEPHandler := web.NewWebCEPHandler(conf, tracer)
+        webStatusHandler := web.NewWebStatusHandler()
+        webserver.AddHandler("GET /cep/{cep}", webCEPHandler.Get)
+        webserver.AddHandler("GET /status", webStatusHandler.Get)
+        return webserver
+}</span>
+
+func main() <span class="cov0" title="0">{
+        // ----- CONFIGS
+        configs, err := configs.LoadConfig(".")
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        // ---------- gracefull shutdown
+        <span class="cov0" title="0">sigCh := make(chan os.Signal, 1)
+        signal.Notify(sigCh, os.Interrupt)
+        ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+        defer cancel()
+
+        // ---------- webserver
+        shutdown, err := otel_provider.InitProvider(configs.OrchestratorApiServiceName, configs.OpenTelemetryCollectorExporerEndpoint)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+        }</span>
+        <span class="cov0" title="0">defer func() </span><span class="cov0" title="0">{
+                if err := shutdown(ctx); err != nil </span><span class="cov0" title="0">{
+                        log.Fatal("failed to shutdown TracerProvider: %w", err)
+                }</span>
+        }()
+
+        <span class="cov0" title="0">go func() </span><span class="cov0" title="0">{
+                webserver := ConfigureServer(configs)
+                webserver.Start()
+        }</span>()
+
+        <span class="cov0" title="0">select </span>{
+        case &lt;-sigCh:<span class="cov0" title="0">
+                log.Println("Shutting down gracefully, CTRL+c pressed...")</span>
+        case &lt;-ctx.Done():<span class="cov0" title="0">
+                log.Println("Shutting down due other reason...")</span>
+        }
+
+        <span class="cov0" title="0">_, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer shutdownCancel()</span>
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package entity
+
+type CEP struct {
+        CEP         string
+        Logradouro  string
+        Complemento string
+        Bairro      string
+        Localidade  string
+        UF          string
+        IBGE        string
+        GIA         string
+        DDD         string
+        SIAFI       string
+}
+
+func NewCEP(cep, logradouro, complemento, bairro, localidade, uf, ibge, gia, ddd, siafi string) *CEP <span class="cov8" title="1">{
+        new_cep := &amp;CEP{
+                CEP:         cep,
+                Logradouro:  logradouro,
+                Complemento: complemento,
+                Bairro:      bairro,
+                Localidade:  localidade,
+                UF:          uf,
+                IBGE:        ibge,
+                GIA:         gia,
+                DDD:         ddd,
+                SIAFI:       siafi,
+        }
+        return new_cep
+}</span>
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package entity
+
+import (
+        "fmt"
+        "strconv"
+)
+
+type Weather struct {
+        City       string
+        Celcius    float64
+        Fahrenheit float64
+        Kelvin     float64
+}
+
+type WeatherDetails struct {
+        Temp float64
+}
+
+type WeatherResponse struct {
+        Main WeatherDetails
+}
+
+func NewWeather(city string, celcius, fahrenheit, kelvin float64) *Weather <span class="cov8" title="1">{
+        return &amp;Weather{
+                City:       city,
+                Celcius:    celcius,
+                Fahrenheit: fahrenheit,
+                Kelvin:     kelvin,
+        }
+}</span>
+
+func (w *Weather) MakeTemperatureConversions(weather_res_main_temp float64) <span class="cov8" title="1">{
+        w.Celcius, _ = strconv.ParseFloat(fmt.Sprintf("%.2f", weather_res_main_temp), 64)
+        w.Fahrenheit, _ = strconv.ParseFloat(fmt.Sprintf("%.2f", weather_res_main_temp*1.8+32), 64)
+        w.Kelvin, _ = strconv.ParseFloat(fmt.Sprintf("%.2f", weather_res_main_temp+273.15), 64)
+}</span>
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package repo
+
+import (
+        "context"
+        "encoding/json"
+        "fmt"
+        "io"
+        "log"
+        "net/http"
+        "regexp"
+        "time"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+)
+
+type CEPRepository struct{}
+
+func NewCEPRepository() *CEPRepository <span class="cov8" title="1">{
+        return &amp;CEPRepository{}
+}</span>
+
+func (r *CEPRepository) IsValid(cep_address string) bool <span class="cov8" title="1">{
+        check, _ := regexp.MatchString("^[0-9]{8}$", cep_address)
+        return (len(cep_address) == 8 &amp;&amp; cep_address != "" &amp;&amp; check)
+}</span>
+
+func (r *CEPRepository) Get(cep_address string) ([]byte, error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+        defer cancel()
+
+        req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://viacep.com.br/ws/%s/json", cep_address), nil)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to create the request: %v", err)
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">res, err := http.DefaultClient.Do(req)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to make the request: %v", err)
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">defer res.Body.Close()
+
+        ctx_err := ctx.Err()
+        if ctx_err != nil </span><span class="cov0" title="0">{
+                select </span>{
+                case &lt;-ctx.Done():<span class="cov0" title="0">
+                        err := ctx.Err()
+                        log.Printf("Max timeout reached: %v", err)
+                        return nil, err</span>
+                }
+        }
+
+        <span class="cov8" title="1">resp_json, err := io.ReadAll(res.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to read the response: %v", err)
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">return resp_json, nil</span>
+}
+
+func (r *CEPRepository) Convert(cep_response []byte) (*entity.CEP, error) <span class="cov8" title="1">{
+        var cep entity.CEP
+
+        err := json.Unmarshal(cep_response, &amp;cep)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to decode the response: %v", err)
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">return &amp;cep, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package repo
+
+import (
+        "context"
+        "encoding/json"
+        "fmt"
+        "io"
+        "log"
+        "net/http"
+        "strings"
+        "time"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+)
+
+type HTTPClient interface {
+        Do(req *http.Request) (*http.Response, error)
+}
+
+type WeatherRepository struct {
+        client HTTPClient
+}
+
+func NewWeatherRepository(client HTTPClient) *WeatherRepository <span class="cov8" title="1">{
+        return &amp;WeatherRepository{
+                client: client,
+        }
+}</span>
+
+func (w *WeatherRepository) Get(city string, api_key string) ([]byte, error) <span class="cov8" title="1">{
+        city = strings.Replace(city, " ", "%20", -1)
+
+        ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+        defer cancel()
+        req, err := http.NewRequestWithContext(
+                ctx,
+                "GET",
+                fmt.Sprintf(
+                        "http://api.openweathermap.org/data/2.5/weather?q=%s&amp;appid=%s&amp;units=metric&amp;temperature.unit=celsius",
+                        city,
+                        api_key,
+                ),
+                nil,
+        )
+
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to create the request: %v", err)
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">res, err := w.client.Do(req)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to make the request: %v", err)
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">defer res.Body.Close()
+
+        ctx_err := ctx.Err()
+        if ctx_err != nil </span><span class="cov0" title="0">{
+                select </span>{
+                case &lt;-ctx.Done():<span class="cov0" title="0">
+                        err := ctx.Err()
+                        log.Printf("Max timeout reached: %v", err)
+                        return nil, err</span>
+                }
+        }
+
+        <span class="cov8" title="1">resp_json, err := io.ReadAll(res.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to read the response: %v", err)
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">if strings.Contains(string(resp_json), "Invalid API key") </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">return resp_json, nil</span>
+}
+
+func (w *WeatherRepository) ConvertToWeatherResponse(weather_response []byte) (*entity.WeatherResponse, error) <span class="cov8" title="1">{
+        var weather_res entity.WeatherResponse
+        err := json.Unmarshal(weather_response, &amp;weather_res)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Fail to decode the response: %v", err)
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">return &amp;weather_res, nil</span>
+}
+
+func (w *WeatherRepository) ConvertToWeather(weather_response *entity.WeatherResponse) (*entity.Weather, error) <span class="cov8" title="1">{
+        weather := entity.Weather{}
+        weather.MakeTemperatureConversions(weather_response.Main.Temp)
+        return &amp;weather, nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package web
+
+import (
+        "encoding/json"
+        "net/http"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/configs"
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/repo"
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/usecase"
+        "github.com/go-chi/chi/v5"
+        "go.opentelemetry.io/otel"
+        "go.opentelemetry.io/otel/propagation"
+        "go.opentelemetry.io/otel/trace"
+)
+
+type WebCEPHandler struct {
+        CEPRepository     entity.CEPRepositoryInterface
+        WeatherRepository entity.WeatherRepositoryInterface
+        Configs           *configs.Conf
+        Tracer            trace.Tracer
+}
+
+func NewWebCEPHandler(conf *configs.Conf, tracer trace.Tracer) *WebCEPHandler <span class="cov0" title="0">{
+        return &amp;WebCEPHandler{
+                CEPRepository:     repo.NewCEPRepository(),
+                WeatherRepository: repo.NewWeatherRepository(&amp;http.Client{}),
+                Configs:           conf,
+                Tracer:            tracer,
+        }
+}</span>
+
+func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        carrier := propagation.HeaderCarrier(r.Header)
+        ctx := r.Context()
+        ctx = otel.GetTextMapPropagator().Extract(ctx, carrier)
+
+        _, span := h.Tracer.Start(ctx, "SPAN_VALIDATE_CEP")
+        cep_address := chi.URLParam(r, "cep")
+        open_weathermap_api_key := h.Configs.OpenWeathermapApiKey
+
+        // CEP FLOW
+        validate_cep_dto := usecase.ValidateCEPInputDTO{
+                CEP: cep_address,
+        }
+
+        validateCEP := usecase.NewValidateCEPUseCase(h.CEPRepository)
+        is_valid := validateCEP.Execute(validate_cep_dto)
+        if !is_valid </span><span class="cov0" title="0">{
+                http.Error(w, "invalid zipcode", http.StatusUnprocessableEntity)
+                return
+        }</span>
+        <span class="cov8" title="1">span.End()
+
+        _, span = h.Tracer.Start(ctx, "SPAN_GET_CEP")
+        get_cep_dto := usecase.CEPInputDTO{
+                CEP: cep_address,
+        }
+
+        getCEP := usecase.NewGetCEPUseCase(h.CEPRepository)
+        cep_output, err := getCEP.Execute(get_cep_dto)
+
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "error getting cep", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if cep_output.Localidade == "" </span><span class="cov0" title="0">{
+                http.Error(w, "can not find zipcode", http.StatusNotFound)
+                return
+        }</span>
+        <span class="cov8" title="1">span.End()
+
+        // WEATHER FLOW
+        _, span = h.Tracer.Start(ctx, "SPAN_GET_WEATHER")
+        weather_dto := usecase.WeatherInputDTO{
+                Localidade: cep_output.Localidade,
+                ApiKey:     open_weathermap_api_key,
+        }
+        getWeather := usecase.NewGetWeatherUseCase(h.WeatherRepository)
+        weather_output, err := getWeather.Execute(weather_dto)
+        if err != nil || (weather_output.Celcius == 0 &amp;&amp; weather_output.Fahrenheit == 0 &amp;&amp; weather_output.Kelvin == 0) </span><span class="cov0" title="0">{
+                http.Error(w, "error getting weather", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        err = json.NewEncoder(w).Encode(weather_output)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+        <span class="cov8" title="1">span.End()</span>
+}
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package web
+
+import (
+        "encoding/json"
+        "net/http"
+)
+
+type WebStatusHandler struct{}
+
+func NewWebStatusHandler() *WebStatusHandler <span class="cov8" title="1">{
+        return &amp;WebStatusHandler{}
+}</span>
+
+type Status struct {
+        Status string `json:"status"`
+}
+
+func (h *WebStatusHandler) Get(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        status := Status{
+                Status: "UP",
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        err := json.NewEncoder(w).Encode(status)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package webserver
+
+type WebServerStarter struct {
+        WebServer WebServer
+}
+
+func NewWebServerStarter(webServer WebServer) *WebServerStarter <span class="cov0" title="0">{
+        return &amp;WebServerStarter{
+                WebServer: webServer,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package webserver
+
+import (
+        "net/http"
+        "time"
+
+        "github.com/go-chi/chi/v5"
+        "github.com/go-chi/chi/v5/middleware"
+        "github.com/prometheus/client_golang/prometheus/promhttp"
+)
+
+type WebServer struct {
+        Router        chi.Router
+        Handlers      map[string]http.HandlerFunc
+        WebServerPort string
+}
+
+func NewWebServer(serverPort string) *WebServer <span class="cov0" title="0">{
+        return &amp;WebServer{
+                Router:        chi.NewRouter(),
+                Handlers:      make(map[string]http.HandlerFunc),
+                WebServerPort: serverPort,
+        }
+}</span>
+
+func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) <span class="cov0" title="0">{
+        s.Handlers[path] = handler
+}</span>
+
+func (s *WebServer) Start() <span class="cov0" title="0">{
+        s.Router.Use(middleware.Logger)
+        s.Router.Use(middleware.RequestID)
+        s.Router.Use(middleware.RealIP)
+        s.Router.Use(middleware.Recoverer)
+        s.Router.Use(middleware.Timeout(60 * time.Second))
+        s.Router.Handle("/metrics", promhttp.Handler())
+
+        for path, handler := range s.Handlers </span><span class="cov0" title="0">{
+                s.Router.Handle(path, handler)
+        }</span>
+        <span class="cov0" title="0">http.ListenAndServe(s.WebServerPort, s.Router)</span>
+}
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package usecase
+
+import (
+        "strings"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+)
+
+type CEPInputDTO struct {
+        CEP string
+}
+
+type CEPOutputDTO struct {
+        CEP         string `json:"cep"`
+        Logradouro  string `json:"logradouro"`
+        Complemento string `json:"complemento"`
+        Bairro      string `json:"bairro"`
+        Localidade  string `json:"localidade"`
+        UF          string `json:"uf"`
+        IBGE        string `json:"ibge"`
+        GIA         string `json:"gia"`
+        DDD         string `json:"ddd"`
+        SIAFI       string `json:"siafi"`
+}
+
+type GetCEPUseCase struct {
+        CEPRepository entity.CEPRepositoryInterface
+}
+
+func NewGetCEPUseCase(cep_repository entity.CEPRepositoryInterface) *GetCEPUseCase <span class="cov8" title="1">{
+        return &amp;GetCEPUseCase{
+                CEPRepository: cep_repository,
+        }
+}</span>
+
+func (c *GetCEPUseCase) Execute(input CEPInputDTO) (CEPOutputDTO, error) <span class="cov8" title="1">{
+        cep := entity.CEP{
+                CEP: input.CEP,
+        }
+
+        cep_resp, err := c.CEPRepository.Get(cep.CEP)
+        if err != nil &amp;&amp; strings.Contains(string(cep_resp), "Http 400") </span><span class="cov0" title="0">{
+                return CEPOutputDTO{}, err
+        }</span>
+
+        <span class="cov8" title="1">cep_dto, err := c.CEPRepository.Convert(cep_resp)
+        if err != nil </span><span class="cov8" title="1">{
+                return CEPOutputDTO{}, err
+        }</span>
+
+        <span class="cov8" title="1">dto := CEPOutputDTO{
+                CEP:         cep_dto.CEP,
+                Logradouro:  cep_dto.Logradouro,
+                Complemento: cep_dto.Complemento,
+                Bairro:      cep_dto.Bairro,
+                Localidade:  cep_dto.Localidade,
+                UF:          cep_dto.UF,
+                IBGE:        cep_dto.IBGE,
+                GIA:         cep_dto.GIA,
+                DDD:         cep_dto.DDD,
+                SIAFI:       cep_dto.SIAFI,
+        }
+
+        return dto, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package usecase
+
+import (
+        "errors"
+        "strings"
+
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+)
+
+type WeatherInputDTO struct {
+        Localidade string
+        ApiKey     string
+}
+
+type WeatherOutputDTO struct {
+        City       string  `json:"city"`
+        Celcius    float64 `json:"temp_C"`
+        Fahrenheit float64 `json:"temp_F"`
+        Kelvin     float64 `json:"temp_K"`
+}
+
+type GetWeatherUseCase struct {
+        WeatherRepository entity.WeatherRepositoryInterface
+}
+
+func NewGetWeatherUseCase(weather_repository entity.WeatherRepositoryInterface) *GetWeatherUseCase <span class="cov8" title="1">{
+        return &amp;GetWeatherUseCase{
+                WeatherRepository: weather_repository,
+        }
+}</span>
+
+func (w *GetWeatherUseCase) Execute(input WeatherInputDTO) (WeatherOutputDTO, error) <span class="cov8" title="1">{
+        if input.Localidade == "" </span><span class="cov8" title="1">{
+                return WeatherOutputDTO{}, errors.New("missing input: Localidade")
+        }</span>
+
+        <span class="cov8" title="1">if input.ApiKey == "" </span><span class="cov8" title="1">{
+                return WeatherOutputDTO{}, errors.New("missing input: ApiKey")
+        }</span>
+
+        <span class="cov8" title="1">weather_resp, err := w.WeatherRepository.Get(input.Localidade, input.ApiKey)
+        if err != nil || strings.Contains(string(weather_resp), "city not found") </span><span class="cov8" title="1">{
+                return WeatherOutputDTO{}, errors.New("fail to get weather")
+        }</span>
+
+        <span class="cov8" title="1">weather_response, err := w.WeatherRepository.ConvertToWeatherResponse(weather_resp)
+        if err != nil </span><span class="cov0" title="0">{
+                return WeatherOutputDTO{}, errors.New("fail to convert weather response")
+        }</span>
+
+        <span class="cov8" title="1">weather_dto, err := w.WeatherRepository.ConvertToWeather(weather_response)
+        if err != nil </span><span class="cov0" title="0">{
+                return WeatherOutputDTO{}, errors.New("fail to convert weather")
+        }</span>
+
+        <span class="cov8" title="1">dto := WeatherOutputDTO{
+                City:       input.Localidade,
+                Celcius:    weather_dto.Celcius,
+                Fahrenheit: weather_dto.Fahrenheit,
+                Kelvin:     weather_dto.Kelvin,
+        }
+
+        return dto, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package usecase
+
+import (
+        "github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+)
+
+type ValidateCEPInputDTO struct {
+        CEP string
+}
+
+type ValidateCEPOutputDTO struct {
+        IsValid bool
+}
+
+type ValidateCEPUseCase struct {
+        CEPRepository entity.CEPRepositoryInterface
+}
+
+func NewValidateCEPUseCase(cep_repository entity.CEPRepositoryInterface) *ValidateCEPUseCase <span class="cov8" title="1">{
+        return &amp;ValidateCEPUseCase{
+                CEPRepository: cep_repository,
+        }
+}</span>
+
+func (c *ValidateCEPUseCase) Execute(input ValidateCEPInputDTO) bool <span class="cov8" title="1">{
+        return c.CEPRepository.IsValid(input.CEP)
+}</span>
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package otel_provider
+
+import (
+        "context"
+        "fmt"
+        "time"
+
+        "go.opentelemetry.io/otel"
+        "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+        "go.opentelemetry.io/otel/propagation"
+        "go.opentelemetry.io/otel/sdk/resource"
+
+        "google.golang.org/grpc"
+        "google.golang.org/grpc/credentials/insecure"
+
+        sdktrace "go.opentelemetry.io/otel/sdk/trace"
+        semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+)
+
+func InitProvider(serviceName, collectorURL string) (func(context.Context) error, error) <span class="cov0" title="0">{
+        ctx := context.Background()
+
+        res, err := resource.New(
+                ctx,
+                resource.WithAttributes(
+                        semconv.ServiceName(serviceName),
+                ),
+        )
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create resource: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">ctx, cancel := context.WithTimeout(ctx, time.Second)
+        defer cancel()
+        conn, err := grpc.DialContext(
+                ctx,
+                collectorURL,
+                grpc.WithTransportCredentials(insecure.NewCredentials()),
+                grpc.WithBlock(),
+        )
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create gRPC connection to collector: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">traceExporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithGRPCConn(conn))
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create trace exporter: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">bsp := sdktrace.NewBatchSpanProcessor(traceExporter)
+        tracerProvider := sdktrace.NewTracerProvider(
+                sdktrace.WithSampler(sdktrace.AlwaysSample()),
+                sdktrace.WithResource(res),
+                sdktrace.WithSpanProcessor(bsp),
+        )
+        otel.SetTracerProvider(tracerProvider)
+
+        otel.SetTextMapPropagator(propagation.TraceContext{})
+
+        return tracerProvider.Shutdown, nil</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

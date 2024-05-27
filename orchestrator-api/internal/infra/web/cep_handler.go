@@ -1,0 +1,94 @@
+package web
+
+import (
+	"encoding/json"
+	"net/http"
+
+	"github.com/aleroxac/goexpert-weather-api-otel/configs"
+	"github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+	"github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/infra/repo"
+	"github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/usecase"
+	"github.com/go-chi/chi/v5"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
+	"go.opentelemetry.io/otel/trace"
+)
+
+type WebCEPHandler struct {
+	CEPRepository     entity.CEPRepositoryInterface
+	WeatherRepository entity.WeatherRepositoryInterface
+	Configs           *configs.Conf
+	Tracer            trace.Tracer
+}
+
+func NewWebCEPHandler(conf *configs.Conf, tracer trace.Tracer) *WebCEPHandler {
+	return &WebCEPHandler{
+		CEPRepository:     repo.NewCEPRepository(),
+		WeatherRepository: repo.NewWeatherRepository(&http.Client{}),
+		Configs:           conf,
+		Tracer:            tracer,
+	}
+}
+
+func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
+	carrier := propagation.HeaderCarrier(r.Header)
+	ctx := r.Context()
+	ctx = otel.GetTextMapPropagator().Extract(ctx, carrier)
+
+	_, span := h.Tracer.Start(ctx, "SPAN_VALIDATE_CEP")
+	cep_address := chi.URLParam(r, "cep")
+	open_weathermap_api_key := h.Configs.OpenWeathermapApiKey
+
+	// CEP FLOW
+	validate_cep_dto := usecase.ValidateCEPInputDTO{
+		CEP: cep_address,
+	}
+
+	validateCEP := usecase.NewValidateCEPUseCase(h.CEPRepository)
+	is_valid := validateCEP.Execute(validate_cep_dto)
+	if !is_valid {
+		http.Error(w, "invalid zipcode", http.StatusUnprocessableEntity)
+		return
+	}
+	span.End()
+
+	_, span = h.Tracer.Start(ctx, "SPAN_GET_CEP")
+	get_cep_dto := usecase.CEPInputDTO{
+		CEP: cep_address,
+	}
+
+	getCEP := usecase.NewGetCEPUseCase(h.CEPRepository)
+	cep_output, err := getCEP.Execute(get_cep_dto)
+
+	if err != nil {
+		http.Error(w, "error getting cep", http.StatusInternalServerError)
+		return
+	}
+
+	if cep_output.Localidade == "" {
+		http.Error(w, "can not find zipcode", http.StatusNotFound)
+		return
+	}
+	span.End()
+
+	// WEATHER FLOW
+	_, span = h.Tracer.Start(ctx, "SPAN_GET_WEATHER")
+	weather_dto := usecase.WeatherInputDTO{
+		Localidade: cep_output.Localidade,
+		ApiKey:     open_weathermap_api_key,
+	}
+	getWeather := usecase.NewGetWeatherUseCase(h.WeatherRepository)
+	weather_output, err := getWeather.Execute(weather_dto)
+	if err != nil || (weather_output.Celcius == 0 && weather_output.Fahrenheit == 0 && weather_output.Kelvin == 0) {
+		http.Error(w, "error getting weather", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(weather_output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	span.End()
+}

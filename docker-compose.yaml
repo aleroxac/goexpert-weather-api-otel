@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1 
 version: "3"
 
 
@@ -16,7 +17,9 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./.docker/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./docker/prometheus.yaml:/etc/prometheus/prometheus.yml
+    networks:
+      - weather-api-otel
 
   grafana:
     container_name: grafana
@@ -27,8 +30,10 @@ services:
       - 3000:3000
     depends_on:
       - prometheus
+    networks:
+      - weather-api-otel
 
-  jaeger: # all-in-one
+  jaeger:
     container_name: jaeger
     hostname: jaeger
     restart: always
@@ -37,6 +42,21 @@ services:
       - 16686:16686
       - 14268
       - 14250
+    networks:
+      - weather-api-otel
+
+  zipkin:
+    container_name: zipkin
+    hostname: zipkin
+    restart: always
+    image: openzipkin/zipkin:latest
+    ports:
+      - 9411:9411 # Port used for the Zipkin UI and HTTP Api
+    environment:
+      - STORAGE_TYPE=mem
+      - JAVA_OPTS=-Xms1024m -Xmx1024m -XX:+ExitOnOutOfMemoryError
+    networks:
+      - weather-api-otel
 
   otel-collector:
     container_name: otel-collector
@@ -45,41 +65,58 @@ services:
     image: otel/opentelemetry-collector:latest
     command: ["--config=/etc/otel-collector-config.yaml"]
     ports:
-      - 4317:4317 # Prometheus metrics exposed by the collector
-      - 8888:8888 # Prometheus metrics exporter
-      - 8889:8889 # OTLP gRPC receiver
+      - 1888:1888   # pprof extension
+      - 8888:8888   # Prometheus metrics exposed by the collector
+      - 8889:8889   # Prometheus exporter metrics
+      - 13133:13133 # health_check extension
+      - 4317:4317   # OTLP gRPC receiver
+      - 55679:55679 # zpages extension
     volumes:
-      - ./.docker/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./docker/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    networks:
+      - weather-api-otel
+    depends_on:
+      - jaeger
+      - zipkin
 
-  # input-api:
-  #   container_name: input-api
-  #   hostname: input-api
-  #   restart: always
-  #   build:
-  #     context: .
-  #     args:
-  #       - TARGET_API=input
-  #       - API_PORT=8080
-  #   ports:
-  #     - 8080:8080
-  #   environment:
-  #     API_PORT: 8080
-  #   depends_on:
-  #     - jaeger
-  #     - prometheus
-  #     - otel-collector
+  orchestrator-api:
+    container_name: orchestrator-api
+    hostname: orchestrator-api
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: .
+      tags:
+        - orchestrator-api:v1 
+      args:
+        - TARGET_API=orchestrator-api
+        - API_PORT=8081
+    ports:
+      - 8081:8081
+    env_file:
+      - .env
+    depends_on:
+      - otel-collector
+    networks:
+      - weather-api-otel
 
-  # orchestrator-api:
-  #   container_name: orchestrator-api
-  #   hostname: orchestrator-api
-  #   restart: always
-  #   build:
-  #     context: .
-  #     args:
-  #       - TARGET_API=orchestrator
-  #       - API_PORT=8081
-  #   ports:
-  #     - 8081:8081
-  #   environment:
-  #     API_PORT: 8081
-  #     INPUT_API_URL: "http://input-api:8080"
+  input-api:
+    container_name: input-api
+    hostname: input-api
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: .
+      tags:
+        - input-api:v1
+      args:
+        - TARGET_API=input-api
+        - API_PORT=8080
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    depends_on:
+      - orchestrator-api
+    networks:
+      - weather-api-otel
