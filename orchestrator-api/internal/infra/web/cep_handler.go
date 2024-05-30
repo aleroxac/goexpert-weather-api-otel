@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/aleroxac/goexpert-weather-api-otel/configs"
@@ -61,7 +62,7 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	cep_output, err := getCEP.Execute(get_cep_dto)
 
 	if err != nil {
-		http.Error(w, "error getting cep", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("error getting cep: %v", err), http.StatusInternalServerError)
 		return
 	}
 
@@ -80,14 +81,14 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	getWeather := usecase.NewGetWeatherUseCase(h.WeatherRepository)
 	weather_output, err := getWeather.Execute(weather_dto)
 	if err != nil || (weather_output.Celcius == 0 && weather_output.Fahrenheit == 0 && weather_output.Kelvin == 0) {
-		http.Error(w, "error getting weather", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("error getting weather: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(weather_output)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("fail to convert the response to json: %v", err.Error()), http.StatusInternalServerError)
 		return
 	}
 	span.End()

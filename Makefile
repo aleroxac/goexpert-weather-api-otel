@@ -12,6 +12,8 @@ help: ## Show this menu
 .PHONY: clean
 clean: ## Clean all temp files
 	@rm -f coverage.*
+	@docker image rm -f goexpert-weather-api-otel-input-api:latest
+	@docker image rm -f goexpert-weather-api-otel-orchestrator-api:latest
 
 
 
@@ -34,9 +36,9 @@ run: ## Make a request to the API
 	@echo -n "200: "; curl -s "http://localhost:8080/cep" -d '{"cep": "13330250"}'
 
 	@echo -e "\n\n------------- orchestrator-api -------------"
-	@echo -n "422: "; curl -s "http://localhost:8081/cep/1234567"
-	@echo -n "404: "; curl -s "http://localhost:8081/cep/12345678"
-	@echo -n "200: "; curl -s "http://localhost:8081/cep/13330250"
+	@echo -n "422: "; curl -s "http://localhost:8081/cep/0100100"
+	@echo -n "404: "; curl -s "http://localhost:8081/cep/01001009"
+	@echo -n "200: "; curl -s "http://localhost:8081/cep/01001001"
 
 .PHONY: test
 test: ## Run the tests
