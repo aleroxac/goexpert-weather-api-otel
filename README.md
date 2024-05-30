@@ -10,16 +10,64 @@ Basedo no cenário conhecido "Sistema de temperatura por CEP" denominado Serviç
 
 
 
-## Como rodar o projeto
+## Como rodar o projeto: make
 ``` shell
-## put the docker-compose containers up
-make up 
+## 1. Clone o repo
 
-## put the docker-compose containers down
+## 2. Crie o .env
+cp .env.example .env
+
+## 3. Coloque sua api-key como valor na variável OPEN_WEATHERMAP_API_KEY no .env
+
+## 4. Rode os testes
+make test
+
+## 5. Baixe compose, se estiver up
 make down
 
-## make some request
+## 6. Remova as imagens antigas, se existirem
+make clean
+
+## 7. Suba o compose 
+make up
+
+## 8. Faça as chamadas
 make run
+```
+
+
+
+## Como rodar o projeto: manual
+``` shell
+## 1. Clone o repo
+
+## 2. Crie o .env
+cp .env.example .env
+
+## 3. Coloque sua api-key como valor na variável OPEN_WEATHERMAP_API_KEY no .env
+
+## 4. Rode os testes
+go test -v ./...
+
+## 5. Baixe compose, se estiver up
+docker-compose down
+
+## 6. Remova as imagens antigas, se existirem
+docker image rm -f input-api:v1
+docker image rm -f orchestrator-api:v1
+
+## 7. Suba o compose 
+docker-compose up -d
+
+## 8. Faça as chamadas
+echo -e -----------------" input-api -----------------"
+echo -n "422: "; curl -s "http://localhost:8080/cep" -d '{"cep": "1234567"}'
+echo -n "200: "; curl -s "http://localhost:8080/cep" -d '{"cep": "13330250"}'
+
+echo -e "\n\n------------- orchestrator-api -------------"
+echo -n "422: "; curl -s "http://localhost:8081/cep/0100100"
+echo -n "404: "; curl -s "http://localhost:8081/cep/01001009"
+echo -n "200: "; curl -s "http://localhost:8081/cep/01001001"
 ```
 
 
