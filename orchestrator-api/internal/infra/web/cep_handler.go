@@ -35,7 +35,7 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	ctx = otel.GetTextMapPropagator().Extract(ctx, carrier)
 
-	_, span := h.Tracer.Start(ctx, "SPAN_VALIDATE_CEP")
+	_, span := h.Tracer.Start(ctx, "ORCHESTRATOR_API:GET_CITY_NAME")
 	cep_address := chi.URLParam(r, "cep")
 	open_weathermap_api_key := h.Configs.OpenWeathermapApiKey
 
@@ -50,9 +50,7 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid zipcode", http.StatusUnprocessableEntity)
 		return
 	}
-	span.End()
 
-	_, span = h.Tracer.Start(ctx, "SPAN_GET_CEP")
 	get_cep_dto := usecase.CEPInputDTO{
 		CEP: cep_address,
 	}
@@ -72,7 +70,7 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	span.End()
 
 	// WEATHER FLOW
-	_, span = h.Tracer.Start(ctx, "SPAN_GET_WEATHER")
+	_, span = h.Tracer.Start(ctx, "ORCHESTRATOR_API:GET_CITY_TEMP")
 	weather_dto := usecase.WeatherInputDTO{
 		Localidade: cep_output.Localidade,
 		ApiKey:     open_weathermap_api_key,

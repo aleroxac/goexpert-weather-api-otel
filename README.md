@@ -10,15 +10,70 @@ Basedo no cenário conhecido "Sistema de temperatura por CEP" denominado Serviç
 
 
 
-## Como rodar o projeto
+## Como rodar o projeto: manual
 ``` shell
-## put the docker-compose containers up
-make up 
+## 1. Clone o repo
 
-## put the docker-compose containers down
+## 2. Crie o .env
+cp .env.example .env
+
+## 3. Coloque sua api-key como valor na variável OPEN_WEATHERMAP_API_KEY no .env
+## ----- ATENÇÃO: estou usando a API https://openweathermap.org/
+## 3.1. Se ainda não tiver uma conta, crie uma.
+## 3.2. Vá até a tela "My API keys", 
+## 3.3. Passe o cursor do mouse sobre o teu nome de usuário, no menu superior à direita
+## 3.4. então defina um nome para a key  e clique em "Generate"
+
+## 4. Baixe compose, se estiver up
+docker-compose down
+
+## 5. Remover as imagens antigas, se existirem
+docker image rm -f aleroxac/input-api:v1
+docker image rm -f aleroxac/orchestrator-api:v1
+
+## 6. Suba o compose 
+docker-compose up -d
+
+## 7. Faça as chamadas
+echo -e -----------------" input-api -----------------"
+echo -n "422: "; curl -s "http://localhost:8080/cep" -d '{"cep": "1234567"}'
+echo -n "200: "; curl -s "http://localhost:8080/cep" -d '{"cep": "13330250"}'
+
+echo -e "\n\n------------- orchestrator-api -------------"
+echo -n "422: "; curl -s "http://localhost:8081/cep/1234567"
+echo -n "404: "; curl -s "http://localhost:8081/cep/12345678"
+echo -n "200: "; curl -s "http://localhost:8081/cep/13330250"
+
+## 8. Veja os traces via Zipkin
+
+```
+
+
+
+## Como rodar o projeto: make
+``` shell
+## 1. Clone o repo
+
+## 2. Crie o .env
+cp .env.example .env
+
+## 3. Coloque sua api-key como valor na variável OPEN_WEATHERMAP_API_KEY no .env
+## ----- ATENÇÃO: estou usando a API https://openweathermap.org/
+## 3.1. Se ainda não tiver uma conta, crie uma.
+## 3.2. Vá até a tela "My API keys", 
+## 3.3. Passe o cursor do mouse sobre o teu nome de usuário, no menu superior à direita
+## 3.4. então defina um nome para a key  e clique em "Generate"
+
+## 4. Baixe compose, se estiver up
 make down
 
-## make some request
+## 5. Remover as imagens antigas, se existire,
+make clean
+
+## 6. Suba o compose 
+make up
+
+## 7. Faça as chamadas
 make run
 ```
 
@@ -66,19 +121,8 @@ make run
 
 
 
-## Traces do input-api: Jaeger
-![input-api-traces](assets/jaeger/2024-05-27_10-21.png)
-
-## Traces do input-api: Zipkin
-![input-api-traces](assets/zipkin/2024-05-27_11-38.png)
-
-
-
-## Traces do orchestrator-api: Jaeger
-![orchestrator-api-traces](assets/jaeger/2024-05-27_10-25.png)
-
-## Traces do orchestrator-api: Zipkin
-![input-api-traces](assets/zipkin/2024-05-27_11-38_1.png)
+## Traces: Zipkin
+![-traces](assets/2024-06-04_12-07.png)
 
 
 

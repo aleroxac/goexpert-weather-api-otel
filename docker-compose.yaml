@@ -33,17 +33,17 @@ services:
     networks:
       - weather-api-otel
 
-  jaeger:
-    container_name: jaeger
-    hostname: jaeger
-    restart: always
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - 16686:16686
-      - 14268
-      - 14250
-    networks:
-      - weather-api-otel
+  # jaeger:
+  #   container_name: jaeger
+  #   hostname: jaeger
+  #   restart: always
+  #   image: jaegertracing/all-in-one:latest
+  #   ports:
+  #     - 16686:16686
+  #     - 14268
+  #     - 14250
+  #   networks:
+  #     - weather-api-otel
 
   zipkin:
     container_name: zipkin
@@ -76,18 +76,19 @@ services:
     networks:
       - weather-api-otel
     depends_on:
-      - jaeger
       - zipkin
+      # - jaeger
 
   orchestrator-api:
     container_name: orchestrator-api
     hostname: orchestrator-api
     restart: always
+    image: aleroxac/orchestrator-api:v1
     build:
       dockerfile: Dockerfile
       context: .
       tags:
-        - orchestrator-api:v1 
+        - aleroxac/orchestrator-api:v1
       args:
         - TARGET_API=orchestrator-api
         - API_PORT=8081
@@ -104,11 +105,12 @@ services:
     container_name: input-api
     hostname: input-api
     restart: always
+    image: aleroxac/input-api:v1
     build:
       dockerfile: Dockerfile
       context: .
       tags:
-        - input-api:v1
+        - aleroxac/input-api:v1
       args:
         - TARGET_API=input-api
         - API_PORT=8080

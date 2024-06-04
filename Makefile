@@ -12,6 +12,8 @@ help: ## Show this menu
 .PHONY: clean
 clean: ## Clean all temp files
 	@rm -f coverage.*
+	@docker image rm -f aleroxac/input-api:v1
+	@docker image rm -f aleroxac/orchestrator-api:v1
 
 
 
