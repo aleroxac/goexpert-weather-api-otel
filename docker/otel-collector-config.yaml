@@ -13,10 +13,10 @@ exporters:
     endpoint: "http://zipkin:9411/api/v2/spans"
     format: proto
 
-  otlp:
-    endpoint: "jaeger:4317"
-    tls:
-      insecure: true
+  # otlp:
+  #   endpoint: "jaeger:4317"
+  #   tls:
+  #     insecure: true
 
 processors:
   batch:
@@ -35,7 +35,8 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, otlp, zipkin]
+      exporters: [logging, zipkin]
+      # exporters: [logging, otlp, zipkin]
     metrics:
       receivers: [otlp]
       processors: [batch]
