@@ -45,7 +45,6 @@ echo -n "404: "; curl -s "http://localhost:8081/cep/12345678"
 echo -n "200: "; curl -s "http://localhost:8081/cep/13330250"
 
 ## 8. Veja os traces via Zipkin
-
 ```
 
 
@@ -75,6 +74,8 @@ make up
 
 ## 7. Faça as chamadas
 make run
+
+## 8. Veja os traces via Zipkin
 ```
 
 
@@ -122,7 +123,7 @@ make run
 
 
 ## Traces: Zipkin
-![-traces](assets/2024-06-04_12-07.png)
+![zipkin-traces](assets/2024-06-04_12-07.png)
 
 
 

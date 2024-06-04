@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -36,14 +37,14 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	_, span := h.Tracer.Start(ctx, "INPUT_API:GET_CEP_TEMP")
 	resp, err := io.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "fail to read the response", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("fail to read the response: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	var cep_data usecase.CEPInputDTO
 	err = json.Unmarshal(resp, &cep_data)
 	if err != nil {
-		http.Error(w, "fail to parse the cep_data", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("fail to parse the cep_data: %v", err), http.StatusInternalServerError)
 		return
 	}
 
@@ -65,7 +66,7 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	getCEP := usecase.NewGetCEPUseCase(h.CEPRepository)
 	err = getCEP.Execute(get_cep_dto)
 	if err != nil {
-		http.Error(w, "error getting cep", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("error getting cep: %v", err), http.StatusInternalServerError)
 		return
 	}
 

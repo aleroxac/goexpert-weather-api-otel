@@ -1,6 +1,8 @@
 package configs
 
-import "github.com/spf13/viper"
+import (
+	"github.com/spf13/viper"
+)
 
 type Conf struct {
 	InputApiHttpPort                      string `mapstructure:"INPUT_API_HTTP_PORT"`
@@ -14,10 +16,10 @@ type Conf struct {
 
 func LoadConfig(path string) (*Conf, error) {
 	var cfg *Conf
-	viper.SetConfigName(".env")
+	viper.SetConfigName("app_config")
 	viper.SetConfigType("env")
 	viper.AddConfigPath(path)
-	// viper.SetConfigFile(".env")
+	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
 	err := viper.ReadInConfig()
 	if err != nil {
