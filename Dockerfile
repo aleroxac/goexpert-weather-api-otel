@@ -1,5 +1,4 @@
-FROM golang:1.22.3
-# FROM golang:1.22.3-alpine3.20
+FROM golang:1.22.3 AS base
 
 
 
@@ -13,21 +12,33 @@ ARG API_PORT
 ENV TARGET_API=${TARGET_API}
 ENV API_PORT=${API_PORT}
 
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
+
 
 
 ## ---------- BUILD
-WORKDIR /app
+## Stage 1 - Build the binary
+FROM base AS builder
+WORKDIR /build
 COPY . .
-RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build ${TARGET_API}/cmd/app/main.go && \
+RUN go build ${TARGET_API}/cmd/app/main.go && \
     chmod +x main
+
+# Stage 2: Compress the binary using UPX
+FROM alpine AS upx
+RUN apk add --no-cache upx
+COPY --from=builder /build/main /upx/main
+RUN upx --best --lzma /upx/main -o /upx/main_compressed
 
 
 
 ## ---------- MAIN
+FROM scratch AS main
+WORKDIR /app
+COPY --from=upx /upx/main_compressed /app/main
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
 ENTRYPOINT [ "./main" ]
-HEALTHCHECK \
-    --interval=10s \
-    --timeout=5s \
-    --start-period=5s \
-    --retries=3 \
-    CMD  [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:${API_PORT}/status) -eq 200 ] || exit 1
+EXPOSE ${API_PORT}

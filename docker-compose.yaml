@@ -20,6 +20,12 @@ services:
       - ./docker/prometheus.yaml:/etc/prometheus/prometheus.yml
     networks:
       - weather-api-otel
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --no-verbose --tries=1 --timeout=5 http://localhost:9090/-/healthy || exit 1"]
+      start_interval: 2s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   grafana:
     container_name: grafana
@@ -29,9 +35,16 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - prometheus
+      prometheus:
+        condition: service_healthy
     networks:
       - weather-api-otel
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --no-verbose --tries=1 --timeout=5 http://localhost:3000/api/health || exit 1"]
+      start_interval: 2s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   # jaeger:
   #   container_name: jaeger
@@ -44,6 +57,11 @@ services:
   #     - 14250
   #   networks:
   #     - weather-api-otel
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "wget --spider --no-verbose --tries=1 --timeout=5 http://localhost:16686 || exit 1"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 3
 
   zipkin:
     container_name: zipkin
@@ -57,6 +75,13 @@ services:
       - JAVA_OPTS=-Xms1024m -Xmx1024m -XX:+ExitOnOutOfMemoryError
     networks:
       - weather-api-otel
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --no-verbose --tries=1 --timeout=5 http://localhost:9411/health || exit 1"]
+      start_interval: 2s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
 
   otel-collector:
     container_name: otel-collector
