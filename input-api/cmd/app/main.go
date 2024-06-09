@@ -40,7 +40,7 @@ func main() {
 		panic(err)
 	}
 
-	// ---------- gracefull shutdown
+	// ---------- graceful shutdown
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, os.Interrupt)
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)

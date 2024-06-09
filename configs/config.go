@@ -1,6 +1,8 @@
 package configs
 
 import (
+	"log"
+
 	"github.com/spf13/viper"
 )
 
@@ -16,18 +18,29 @@ type Conf struct {
 
 func LoadConfig(path string) (*Conf, error) {
 	var cfg *Conf
+	var err error
+
 	viper.SetConfigName("app_config")
 	viper.SetConfigType("env")
 	viper.AddConfigPath(path)
 	viper.SetConfigFile(".env")
+
 	viper.AutomaticEnv()
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
+	viper.BindEnv("INPUT_API_HTTP_PORT")
+	viper.BindEnv("INPUT_API_OTEL_SERVICE_NAME")
+	viper.BindEnv("ORCHESTRATOR_API_PORT")
+	viper.BindEnv("ORCHESTRATOR_API_HOST")
+	viper.BindEnv("OPEN_WEATHERMAP_API_KEY")
+	viper.BindEnv("ORCHESTRATOR_API_SERVICE_NAME")
+	viper.BindEnv("OPEN_TELEMETRY_COLLECTOR_EXPORTER_ENDPOINT")
+
+	if err := viper.ReadInConfig(); err != nil {
+		log.Printf("WARNING: %v\n", err)
 	}
-	err = viper.Unmarshal(&cfg)
-	if err != nil {
-		panic(err)
+
+	if err := viper.Unmarshal(&cfg); err != nil {
+		return nil, err
 	}
+
 	return cfg, err
 }

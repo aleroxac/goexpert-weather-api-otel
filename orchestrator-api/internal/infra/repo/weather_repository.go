@@ -11,6 +11,9 @@ import (
 	"time"
 
 	"github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 )
 
 type HTTPClient interface {
@@ -48,7 +51,12 @@ func (w *WeatherRepository) Get(city string, api_key string) ([]byte, error) {
 		return nil, err
 	}
 
-	res, err := w.client.Do(req)
+	otel.GetTextMapPropagator().Inject(ctx, propagation.HeaderCarrier(req.Header))
+
+	client := http.Client{
+		Transport: otelhttp.NewTransport(http.DefaultTransport),
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		log.Printf("Fail to make the request: %v", err)
 		return nil, err
@@ -65,17 +73,17 @@ func (w *WeatherRepository) Get(city string, api_key string) ([]byte, error) {
 		}
 	}
 
-	resp_json, err := io.ReadAll(res.Body)
+	resp, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Printf("Fail to read the response: %v", err)
 		return nil, err
 	}
 
-	if strings.Contains(string(resp_json), "Invalid API key") {
+	if strings.Contains(string(resp), "Invalid API key") {
 		return nil, err
 	}
 
-	return resp_json, nil
+	return resp, nil
 }
 
 func (w *WeatherRepository) ConvertToWeatherResponse(weather_response []byte) (*entity.WeatherResponse, error) {

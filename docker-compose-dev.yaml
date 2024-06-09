@@ -102,21 +102,16 @@ services:
       - weather-api-otel
     depends_on:
       - zipkin
-      # - jaeger
+      # - jaegerm,
 
   orchestrator-api:
     container_name: orchestrator-api
     hostname: orchestrator-api
     restart: always
-    image: aleroxac/orchestrator-api:v1
-    build:
-      dockerfile: Dockerfile
-      context: .
-      tags:
-        - aleroxac/orchestrator-api:v1
-      args:
-        - TARGET_API=orchestrator-api
-        - API_PORT=8081
+    image: golang:1.22.3
+    volumes:
+      - .:/app
+    command: ["bash", "-c", "cd /app && go mod tidy && go run orchestrator-api/cmd/app/main.go"]
     ports:
       - 8081:8081
     env_file:
@@ -130,15 +125,10 @@ services:
     container_name: input-api
     hostname: input-api
     restart: always
-    image: aleroxac/input-api:v1
-    build:
-      dockerfile: Dockerfile
-      context: .
-      tags:
-        - aleroxac/input-api:v1
-      args:
-        - TARGET_API=input-api
-        - API_PORT=8080
+    image: golang:1.22.3
+    volumes:
+      - .:/app
+    command: ["bash", "-c", "cd /app && go mod tidy && go run input-api/cmd/app/main.go"]
     ports:
       - 8080:8080
     env_file:

@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"regexp"
 	"time"
+
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 )
 
 type CEPRepository struct {
@@ -42,12 +46,22 @@ func (r *CEPRepository) Get(cep_address string) error {
 		return err
 	}
 
-	res, err := http.DefaultClient.Do(req)
+	otel.GetTextMapPropagator().Inject(ctx, propagation.HeaderCarrier(req.Header))
+
+	client := http.Client{
+		Transport: otelhttp.NewTransport(http.DefaultTransport,
+			otelhttp.WithSpanNameFormatter(func(_ string, req *http.Request) string {
+				return "get-cep-temp"
+			}),
+		),
+	}
+
+	resp, err := client.Do(req)
 	if err != nil {
 		log.Printf("Fail to make the request: %v", err)
 		return err
 	}
-	defer res.Body.Close()
+	defer resp.Body.Close()
 
 	ctx_err := ctx.Err()
 	if ctx_err != nil {

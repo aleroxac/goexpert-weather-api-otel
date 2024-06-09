@@ -11,6 +11,9 @@ import (
 	"time"
 
 	"github.com/aleroxac/goexpert-weather-api-otel/orchestrator-api/internal/entity"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 )
 
 type CEPRepository struct{}
@@ -34,7 +37,12 @@ func (r *CEPRepository) Get(cep_address string) ([]byte, error) {
 		return nil, err
 	}
 
-	res, err := http.DefaultClient.Do(req)
+	otel.GetTextMapPropagator().Inject(ctx, propagation.HeaderCarrier(req.Header))
+
+	client := http.Client{
+		Transport: otelhttp.NewTransport(http.DefaultTransport),
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		log.Printf("Fail to make the request: %v", err)
 		return nil, err
@@ -51,13 +59,13 @@ func (r *CEPRepository) Get(cep_address string) ([]byte, error) {
 		}
 	}
 
-	resp_json, err := io.ReadAll(res.Body)
+	resp, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Printf("Fail to read the response: %v", err)
 		return nil, err
 	}
 
-	return resp_json, nil
+	return resp, nil
 }
 
 func (r *CEPRepository) Convert(cep_response []byte) (*entity.CEP, error) {
