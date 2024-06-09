@@ -34,17 +34,11 @@ docker image rm -f aleroxac/orchestrator-api:v1
 ## 6. Suba o compose 
 docker-compose up -d
 
-## 7. Faça as chamadas
+## 7. Faça uma chamada no input-api para gerar os traces
 echo -e -----------------" input-api -----------------"
-echo -n "422: "; curl -s "http://localhost:8080/cep" -d '{"cep": "1234567"}'
 echo -n "200: "; curl -s "http://localhost:8080/cep" -d '{"cep": "13330250"}'
 
-echo -e "\n\n------------- orchestrator-api -------------"
-echo -n "422: "; curl -s "http://localhost:8081/cep/1234567"
-echo -n "404: "; curl -s "http://localhost:8081/cep/12345678"
-echo -n "200: "; curl -s "http://localhost:8081/cep/13330250"
-
-## 8. Veja os traces via Zipkin
+## 8. Veja os traces via Zipkin: http://localhost:9411
 ```
 
 
@@ -72,20 +66,21 @@ make clean
 ## 6. Suba o compose 
 make up
 
-## 7. Faça as chamadas
-make run
+## 7. Faça uma chamada no input-api para gerar os traces
+make call-input-api
 
-## 8. Veja os traces via Zipkin
+## 8. Veja os traces via Zipkin: http://localhost:9411
 ```
 
 
 
 ## Funcionalidades da Linguagem Utilizadas
-- context
-- net/http
-- encoding/json
-- testing
-- testify
+- configs: spf13/viper
+- graceful-shutdown: os/signal
+- tests: stretchr/testify
+- web-framework: go-chi
+- tracing: opentelemetry
+- metrics: prometheus
 
 
 
@@ -123,7 +118,8 @@ make run
 
 
 ## Traces: Zipkin
-![zipkin-traces](assets/2024-06-04_12-07.png)
+![zipkin-traces-overview](assets/2024-06-09_12-11.png)
+![zipkin-traces-all-spans](assets/2024-06-09_12-12.png)
 
 
 

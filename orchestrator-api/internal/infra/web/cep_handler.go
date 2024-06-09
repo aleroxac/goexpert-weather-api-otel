@@ -31,12 +31,20 @@ func NewWebCEPHandler(conf *configs.Conf, tracer trace.Tracer) *WebCEPHandler {
 	}
 }
 
+func NewWebCEPHandlerWithDeps(cepRepo entity.CEPRepositoryInterface, weatherRepo entity.WeatherRepositoryInterface, configs *configs.Conf) *WebCEPHandler {
+	return &WebCEPHandler{
+		CEPRepository:     cepRepo,
+		WeatherRepository: weatherRepo,
+		Configs:           configs,
+	}
+}
+
 func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	carrier := propagation.HeaderCarrier(r.Header)
 	ctx := r.Context()
 	ctx = otel.GetTextMapPropagator().Extract(ctx, carrier)
+	_, span := h.Tracer.Start(ctx, "get-city-name")
 
-	_, span := h.Tracer.Start(ctx, "ORCHESTRATOR_API:GET_CITY_NAME")
 	cep_address := chi.URLParam(r, "cep")
 	open_weathermap_api_key := h.Configs.OpenWeathermapApiKey
 
@@ -71,7 +79,7 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 	span.End()
 
 	// WEATHER FLOW
-	_, span = h.Tracer.Start(ctx, "ORCHESTRATOR_API:GET_CITY_TEMP")
+	_, span = h.Tracer.Start(ctx, "get-city-temp")
 	weather_dto := usecase.WeatherInputDTO{
 		Localidade: cep_output.Localidade,
 		ApiKey:     open_weathermap_api_key,

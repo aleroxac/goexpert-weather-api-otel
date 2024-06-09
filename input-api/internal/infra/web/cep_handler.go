@@ -10,8 +10,6 @@ import (
 	"github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/entity"
 	"github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/infra/repo"
 	"github.com/aleroxac/goexpert-weather-api-otel/input-api/internal/usecase"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -30,11 +28,6 @@ func NewWebCEPHandler(conf *configs.Conf, tracer trace.Tracer) *WebCEPHandler {
 }
 
 func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
-	carrier := propagation.HeaderCarrier(r.Header)
-	ctx := r.Context()
-	ctx = otel.GetTextMapPropagator().Extract(ctx, carrier)
-
-	_, span := h.Tracer.Start(ctx, "INPUT_API:GET_CEP_TEMP")
 	resp, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("fail to read the response: %v", err), http.StatusInternalServerError)
@@ -72,5 +65,4 @@ func (h *WebCEPHandler) Get(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	span.End()
 }

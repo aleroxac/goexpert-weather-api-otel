@@ -45,7 +45,7 @@ func (w *GetWeatherUseCase) Execute(input WeatherInputDTO) (WeatherOutputDTO, er
 
 	weather_response, err := w.WeatherRepository.ConvertToWeatherResponse(weather_resp)
 	if err != nil {
-		return WeatherOutputDTO{}, errors.New("fail to convert weather response")
+		return WeatherOutputDTO{}, errors.New("fail to convert weather response: %s" + err.Error())
 	}
 
 	weather_dto, err := w.WeatherRepository.ConvertToWeather(weather_response)
