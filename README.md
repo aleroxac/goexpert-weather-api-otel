@@ -20,9 +20,9 @@ cp .env.example .env
 ## 3. Coloque sua api-key como valor na variável OPEN_WEATHERMAP_API_KEY no .env
 ## ----- ATENÇÃO: estou usando a API https://openweathermap.org/
 ## 3.1. Se ainda não tiver uma conta, crie uma.
-## 3.2. Vá até a tela "My API keys", 
-## 3.3. Passe o cursor do mouse sobre o teu nome de usuário, no menu superior à direita
-## 3.4. então defina um nome para a key  e clique em "Generate"
+## 3.2. Passe o cursor do mouse sobre o teu nome de usuário, no menu superior à direita
+## 3.3. Clique em "My API keys", 
+## 3.4. No bloco "Create key", defina um nome para a key e clique em "Generate"
 
 ## 4. Baixe compose, se estiver up
 docker-compose down
@@ -39,6 +39,7 @@ echo -e -----------------" input-api -----------------"
 echo -n "200: "; curl -s "http://localhost:8080/cep" -d '{"cep": "13330250"}'
 
 ## 8. Veja os traces via Zipkin: http://localhost:9411
+## DICA: clique sobre o span do input-api para poder ver os spans aninhados do orchestrator-api também
 ```
 
 
@@ -53,9 +54,9 @@ cp .env.example .env
 ## 3. Coloque sua api-key como valor na variável OPEN_WEATHERMAP_API_KEY no .env
 ## ----- ATENÇÃO: estou usando a API https://openweathermap.org/
 ## 3.1. Se ainda não tiver uma conta, crie uma.
-## 3.2. Vá até a tela "My API keys", 
-## 3.3. Passe o cursor do mouse sobre o teu nome de usuário, no menu superior à direita
-## 3.4. então defina um nome para a key  e clique em "Generate"
+## 3.2. Passe o cursor do mouse sobre o teu nome de usuário, no menu superior à direita
+## 3.3. Clique em "My API keys", 
+## 3.4. No bloco "Create key", defina um nome para a key e clique em "Generate"
 
 ## 4. Baixe compose, se estiver up
 make down
@@ -70,6 +71,7 @@ make up
 make call-input-api
 
 ## 8. Veja os traces via Zipkin: http://localhost:9411
+## DICA: clique sobre o span do input-api para poder ver os spans aninhados do orchestrator-api também
 ```
 
 
@@ -118,8 +120,7 @@ make call-input-api
 
 
 ## Traces: Zipkin
-![zipkin-traces-overview](assets/2024-06-09_12-11.png)
-![zipkin-traces-all-spans](assets/2024-06-09_12-12.png)
+![zipkin-traces](assets/2024-06-09_12-12.png)
 
 
 
